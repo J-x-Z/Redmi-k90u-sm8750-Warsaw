@@ -169,3 +169,7 @@ sphinx_*/
 
 # Rust analyzer configuration
 /rust-project.json
+
+# Warsaw release artifacts
+/warsaw/bore-like/*.zip
+/warsaw-gki-workspace-lock.json

@@ -1,0 +1,9 @@
+load(":targets.bzl", "warsaw_kernel")
+
+package(default_visibility = ["//visibility:public"])
+
+warsaw_kernel(
+    name = "warsaw_gki_kernelsu",
+    defconfig_fragments = [":jxz-kernelsu.fragment"],
+    smoke_name = "warsaw_kernelsu_sdk_smoke",
+)
