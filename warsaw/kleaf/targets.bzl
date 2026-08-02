@@ -3,7 +3,10 @@ load("//build/kernel/kleaf:kernel.bzl", "ddk_module", "kernel_build")
 load("//common:modules.bzl", "get_gki_modules_list", "get_kunit_modules_list")
 
 
-def warsaw_kernel(name, defconfig_fragments, smoke_name = None):
+def warsaw_kernel(name, defconfig_fragments, extra_module_outs = None, smoke_name = None):
+    if extra_module_outs == None:
+        extra_module_outs = []
+
     kernel_build(
         name = name,
         srcs = ["//common:kernel_aarch64_sources"],
@@ -22,6 +25,7 @@ def warsaw_kernel(name, defconfig_fragments, smoke_name = None):
             "certs/signing_key.x509",
             "scripts/sign-file",
         ],
+        module_outs = extra_module_outs,
         module_implicit_outs = get_gki_modules_list("arm64") + get_kunit_modules_list("arm64"),
         build_config = "//common:kernel_aarch64_build_config",
         make_goals = [

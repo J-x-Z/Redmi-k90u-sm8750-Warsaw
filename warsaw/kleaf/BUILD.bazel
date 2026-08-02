@@ -2,8 +2,56 @@ load(":targets.bzl", "warsaw_kernel")
 
 package(default_visibility = ["//visibility:public"])
 
+_TOOLBOX_MODULE_OUTS = [
+    "drivers/bluetooth/btintel.ko",
+    "drivers/bluetooth/btrtl.ko",
+    "drivers/bluetooth/btusb.ko",
+    "drivers/net/geneve.ko",
+    "drivers/net/macvlan.ko",
+    "drivers/net/vxlan/vxlan.ko",
+    "fs/ntfs3/ntfs3.ko",
+    "fs/squashfs/squashfs.ko",
+    "net/ipv4/raw_diag.ko",
+    "net/netlink/netlink_diag.ko",
+    "net/packet/af_packet_diag.ko",
+    "net/sched/sch_cake.ko",
+    "net/unix/unix_diag.ko",
+]
+
+_TOOLBOX_LAB_MODULE_OUTS = [
+    "drivers/block/nbd.ko",
+    "drivers/net/bonding/bonding.ko",
+    "drivers/usb/gadget/legacy/gadgetfs.ko",
+    "drivers/usb/gadget/legacy/raw_gadget.ko",
+    "drivers/usb/usbip/usbip-core.ko",
+    "drivers/usb/usbip/usbip-host.ko",
+    "drivers/usb/usbip/usbip-vudc.ko",
+    "drivers/usb/usbip/vhci-hcd.ko",
+    "fs/isofs/isofs.ko",
+    "fs/udf/udf.ko",
+    "lib/crc-itu-t.ko",
+    "net/core/pktgen.ko",
+]
+
 warsaw_kernel(
     name = "warsaw_gki_kernelsu",
     defconfig_fragments = [":jxz-kernelsu.fragment"],
     smoke_name = "warsaw_kernelsu_sdk_smoke",
+)
+
+warsaw_kernel(
+    name = "warsaw_gki_toolbox",
+    defconfig_fragments = [":jxz-toolbox.fragment"],
+    extra_module_outs = _TOOLBOX_MODULE_OUTS,
+    smoke_name = "warsaw_toolbox_sdk_smoke",
+)
+
+warsaw_kernel(
+    name = "warsaw_gki_toolbox_lab",
+    defconfig_fragments = [
+        ":jxz-toolbox.fragment",
+        ":jxz-toolbox-lab.fragment",
+    ],
+    extra_module_outs = _TOOLBOX_MODULE_OUTS + _TOOLBOX_LAB_MODULE_OUTS,
+    smoke_name = "warsaw_toolbox_lab_sdk_smoke",
 )
